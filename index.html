@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Advanced Interactive Water Cycle</title>
+    <title>Enhanced Interactive Water Cycle</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -12,7 +12,7 @@
             background-color: #f0f8ff;
         }
         .container {
-            max-width: 1000px;
+            max-width: 100%;
             margin: 0 auto;
             background-color: white;
             border-radius: 10px;
@@ -26,8 +26,8 @@
         #water-cycle {
             position: relative;
             width: 100%;
-            height: 600px;
-            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="600" viewBox="0 0 1000 600"><rect width="100%" height="100%" fill="%2387CEEB"/><path d="M0 400 Q 250 300 500 400 T 1000 400 L 1000 600 L 0 600 Z" fill="%23228B22"/><path d="M0 450 Q 250 400 500 450 T 1000 450 L 1000 600 L 0 600 Z" fill="%230066cc"/></svg>');
+            padding-top: 60%;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 600"><defs><linearGradient id="skyGradient" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" style="stop-color:%2387CEEB"/><stop offset="100%" style="stop-color:%23E6E6FA"/></linearGradient></defs><rect width="100%" height="100%" fill="url(%23skyGradient)"/><path d="M0 300 Q 250 0 500 300 L 500 600 L 0 600 Z" fill="%23228B22"/></svg>');
             background-size: cover;
             border-radius: 10px;
             overflow: hidden;
@@ -36,88 +36,147 @@
             position: absolute;
             cursor: pointer;
             transition: transform 0.3s;
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
         }
         .element:hover {
             transform: scale(1.1);
         }
         #sun {
-            top: 20px;
-            left: 20px;
-            width: 80px;
-            height: 80px;
+            top: 3%;
+            left: 2%;
+            width: 13%;
+            height: 13%;
             background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="%23FFD700"/><g fill="none" stroke="%23FF8C00" stroke-width="4"><path d="M50 10 L50 0 M50 100 L50 90 M10 50 L0 50 M100 50 L90 50 M22 22 L15 15 M78 78 L85 85 M22 78 L15 85 M78 22 L85 15"/></g></svg>');
-            background-size: cover;
+            animation: pulse 2s ease-in-out infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
         }
         #cloud {
-            top: 40px;
-            right: 100px;
-            width: 120px;
-            height: 60px;
+            top: 6%;
+            right: 10%;
+            width: 20%;
+            height: 10%;
             background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 60"><path d="M20 50 Q30 60 50 50 Q75 65 90 50 Q110 60 120 45 Q120 20 100 25 Q110 5 90 10 Q80 0 70 10 Q60 0 50 10 Q40 0 30 15 Q0 5 0 35 Q0 50 20 50 Z" fill="%23FFFFFF"/></svg>');
-            background-size: cover;
+            animation: float 10s ease-in-out infinite;
         }
-        #rain {
-            top: 120px;
-            right: 150px;
-            width: 40px;
-            height: 80px;
-            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 80"><g fill="%234169E1"><circle cx="10" cy="10" r="3"/><path d="M10 15 L7 25"/><circle cx="20" cy="5" r="3"/><path d="M20 10 L17 20"/><circle cx="30" cy="15" r="3"/><path d="M30 20 L27 30"/></g></svg>');
-            background-size: cover;
-            animation: rain 2s linear infinite;
+        @keyframes float {
+            0%, 100% { transform: translateX(0) translateY(0); }
+            25% { transform: translateX(10px) translateY(-5px); }
+            50% { transform: translateX(20px) translateY(0); }
+            75% { transform: translateX(10px) translateY(5px); }
         }
-        @keyframes rain {
-            0% { transform: translateY(0); }
-            100% { transform: translateY(80px); }
+        .rain-particle {
+            position: absolute;
+            width: 2px;
+            height: 10px;
+            background-color: #4169E1;
+            animation: rain-fall linear infinite;
+        }
+        @keyframes rain-fall {
+            0% { transform: translateY(-10px); }
+            100% { transform: translateY(300px); }
         }
         #ocean {
             bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 150px;
-            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 150"><path d="M0 20 Q250 0 500 20 T1000 20 L1000 150 L0 150 Z" fill="%230066cc"/><path d="M0 40 Q250 20 500 40 T1000 40" fill="none" stroke="%23FFFFFF" stroke-width="2"/></svg>');
-            background-size: cover;
+            right: 0;
+            width: 50%;
+            height: 50%;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 300"><path d="M0 0 Q125 20 250 0 T500 0 L500 300 L0 300 Z" fill="%230066cc"/><path d="M0 40 Q125 20 250 40 T500 40" fill="none" stroke="%23FFFFFF" stroke-width="2"/><path d="M0 80 Q125 60 250 80 T500 80" fill="none" stroke="%23FFFFFF" stroke-width="2"/></svg>');
+            overflow: hidden;
         }
-        #evaporation {
-            bottom: 150px;
-            left: 50px;
-            width: 60px;
-            height: 100px;
-            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 100"><g fill="none" stroke="%23E6E6FA" stroke-width="2"><path d="M10 100 Q15 80 20 90 Q25 70 30 80 Q35 60 40 70 Q45 50 50 60"/></g></svg>');
-            background-size: cover;
+        .wave {
+            position: absolute;
+            width: 200%;
+            height: 100%;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 100"><path d="M0 50 Q250 0 500 50 T1000 50" fill="none" stroke="%23FFFFFF" stroke-width="2"/></svg>');
+            animation: wave 10s linear infinite;
+        }
+        @keyframes wave {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        .evaporation-particle {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background-color: #E6E6FA;
+            border-radius: 50%;
             animation: evaporate 4s ease-in-out infinite;
         }
         @keyframes evaporate {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-20px); }
+            0% { transform: translateY(-300px) scale(1); opacity: 1; }
+            100% { transform: translateY(-500px) scale(0); opacity: 0.5; }
         }
         #groundwater {
-            bottom: 50px;
-            left: 200px;
-            width: 200px;
-            height: 100px;
-            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 100"><rect width="200" height="100" fill="%23964B00"/><path d="M20 20 L180 20 M40 40 L160 40 M60 60 L140 60 M80 80 L120 80" stroke="%234169E1" stroke-width="4" stroke-linecap="round"/></svg>');
-            background-size: cover;
+            bottom: 0;
+            left: 5%;
+            width: 33%;
+            height: 16%;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 200"><rect width="400" height="200" fill="%23964B00"/><path d="M20 20 L380 20 M40 60 L360 60 M60 100 L340 100 M80 140 L320 140 M100 180 L300 180" stroke="%234169E1" stroke-width="4" stroke-linecap="round"/></svg>');
         }
         #transpiration {
-            bottom: 200px;
-            right: 100px;
-            width: 100px;
-            height: 150px;
-            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 150"><path d="M50 150 L50 50 M30 70 L50 50 L70 70 M20 100 L50 50 L80 100" fill="none" stroke="%23228B22" stroke-width="4"/><g fill="%23E6E6FA"><circle cx="30" cy="30" r="5"/><circle cx="50" cy="20" r="5"/><circle cx="70" cy="30" r="5"/></g></svg>');
-            background-size: cover;
+            bottom: 55%;
+            left: 10%;
+            width: 25%;
+            height: 33%;
+            background-color: transparent;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+        .tree {
+            width: 30%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+        }
+        .trunk {
+            width: 20%;
+            height: 50%;
+            background-color: #8B4513;
+        }
+        .leaves {
+            width: 100%;
+            height: 50%;
+            background-color: #0b4b0b;
+            border-radius: 50% 50% 0 0;
+        }
+        .transpiration-particle {
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            background-color: #E6E6FA;
+            border-radius: 50%;
+            animation: transpire 5s ease-in-out infinite;
+        }
+        @keyframes transpire {
+            0% { transform: translateY(0) translateX(0) scale(1); opacity: 1; }
+            100% { transform: translateY(-100px) translateX(20px) scale(0); opacity: 0; }
         }
         #runoff {
-            bottom: 150px;
-            left: 300px;
-            width: 150px;
-            height: 50px;
-            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 150 50"><path d="M0 25 Q37.5 0 75 25 T150 25" fill="none" stroke="%234169E1" stroke-width="4"/><circle cx="15" cy="22" r="5" fill="%234169E1"/><circle cx="45" cy="10" r="5" fill="%234169E1"/><circle cx="75" cy="22" r="5" fill="%234169E1"/><circle cx="105" cy="10" r="5" fill="%234169E1"/><circle cx="135" cy="22" r="5" fill="%234169E1"/></svg>');
-            background-size: cover;
+            bottom: 45%;
+            left: 25%;
+            width: 33%;
+            height: 16%;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 100"><path d="M0 50 Q50 0 100 50 T200 50" fill="none" stroke="%234169E1" stroke-width="4"/><circle cx="20" cy="44" r="5" fill="%234169E1"/><circle cx="60" cy="20" r="5" fill="%234169E1"/><circle cx="100" cy="44" r="5" fill="%234169E1"/><circle cx="140" cy="20" r="5" fill="%234169E1"/><circle cx="180" cy="44" r="5" fill="%234169E1"/></svg>');
+        }
+        .runoff-particle {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background-color: #4169E1;
+            border-radius: 50%;
             animation: flow 4s linear infinite;
         }
         @keyframes flow {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(20px); }
+            0% { transform: translateX(0) translateY(-150px); }
+            100% { transform: translateX(220px) translateY(0px); }
         }
         #info-box {
             margin-top: 20px;
@@ -151,20 +210,161 @@
             margin: 5px 0;
             color: #0066cc;
         }
+        .quiz-option {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            text-align: left;
+            border: 1px solid #0066cc;
+            background-color: white;
+            color: #0066cc;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .feedback {
+            width: 20px;
+            height: 20px;
+            display: none;
+        }
+
+         .tooltip {
+            position: relative;
+            display: inline-block;
+        }
+
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 200px;
+            background-color: #555;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 5px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -100px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        #rain, #evaporation {
+            position: absolute;
+            width: 20%;
+            height: 20%;
+            cursor: pointer;
+        }
+
+        #rain {
+            top: 30%;
+            right: 10%;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M50 0 L45 10 L55 10 Z" fill="%234169E1"/><path d="M30 20 L25 30 L35 30 Z" fill="%234169E1"/><path d="M70 20 L65 30 L75 30 Z" fill="%234169E1"/></svg>');
+        }
+
+        #evaporation {
+            bottom: 30%;
+            right: 10%;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M50 100 L45 90 L55 90 Z" fill="%23E6E6FA"/><path d="M30 80 L25 70 L35 70 Z" fill="%23E6E6FA"/><path d="M70 80 L65 70 L75 70 Z" fill="%23E6E6FA"/></svg>');
+        }
+
+        #rain:hover, #evaporation:hover {
+            transform: scale(1.1);
+        }
+
+
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            h1 {
+                font-size: 24px;
+            }
+            h2 {
+                font-size: 20px;
+            }
+            #water-cycle {
+                padding-top: 100%;
+            }
+            .element {
+                transform: scale(0.8);
+            }
+            .element:hover {
+                transform: scale(0.9);
+            }
+            #sun {
+                width: 20%;
+                height: 20%;
+            }
+            #cloud {
+                width: 30%;
+                height: 15%;
+            }
+            #ocean {
+                width: 60%;
+                height: 40%;
+            }
+            #groundwater {
+                width: 40%;
+                height: 20%;
+            }
+            #transpiration {
+                width: 30%;
+                height: 40%;
+            }
+            #runoff {
+                width: 40%;
+                height: 20%;
+            }
+            #rain, #evaporation {
+                width: 30%;
+                height: 30%;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Advanced Interactive Water Cycle</h1>
+        <h1>Enhanced Interactive Water Cycle</h1>
         <div id="water-cycle">
             <div id="sun" class="element" onclick="showInfo('sun')"></div>
             <div id="cloud" class="element" onclick="showInfo('cloud')"></div>
-            <div id="rain" class="element" onclick="showInfo('rain')"></div>
-            <div id="ocean" class="element" onclick="showInfo('ocean')"></div>
-            <div id="evaporation" class="element" onclick="showInfo('evaporation')"></div>
+            <div id="ocean" class="element" onclick="showInfo('ocean')">
+                <div class="wave"></div>
+            </div>
             <div id="groundwater" class="element" onclick="showInfo('groundwater')"></div>
-            <div id="transpiration" class="element" onclick="showInfo('transpiration')"></div>
+            <div id="transpiration" class="element" onclick="showInfo('transpiration')">
+                <div class="tree">
+                    <div class="leaves"></div>
+                    <div class="trunk"></div>
+                </div>
+                <div class="tree">
+                    <div class="leaves"></div>
+                    <div class="trunk"></div>
+                </div>
+                <div class="tree">
+                    <div class="leaves"></div>
+                    <div class="trunk"></div>
+                </div>
+            </div>
             <div id="runoff" class="element" onclick="showInfo('runoff')"></div>
+            <div id="evaporation" class="element" onclick="showInfo('evaporation')"></div>
+            <div id="rain" class="element" onclick="showInfo('rain')"></div>
+            <div id="evaporation" class="element tooltip" onclick="showInfo('evaporation')">
+                <span class="tooltiptext">Evaporation</span>
+            </div>
+            <div id="rain" class="element tooltip" onclick="showInfo('rain')">
+                <span class="tooltiptext">Rain</span>
+            </div>
+
         </div>
         <div id="info-box">
             Click on an element to learn more about its role in the water cycle.
@@ -182,39 +382,42 @@
     </div>
 
     <script>
+        const infoData = {
+            sun: "The sun is the primary driver of the water cycle. It provides energy to heat water in oceans, lakes, and other water bodies, causing evaporation. Solar energy also powers photosynthesis in plants, which contributes to transpiration. The sun's energy creates temperature differences in the atmosphere, leading to wind and weather patterns that distribute water vapor globally.",
+            cloud: "Clouds form when water vapor in the air condenses into tiny water droplets or ice crystals. This process is called condensation and occurs when warm air rises and cools. As the air cools, it can hold less water vapor, so the excess condenses around tiny particles in the air (such as dust or salt). Clouds play a crucial role in the water cycle by transporting water vapor through the atmosphere and eventually releasing it as precipitation.",
+            ocean: "Oceans cover about 71% of the Earth's surface and contain about 97% of the Earth's water. They play a crucial role in the water cycle as the primary source of evaporation. Oceans also influence climate patterns and weather by absorbing and releasing heat. The continuous movement of ocean currents helps distribute heat and moisture around the globe. Salinity and temperature differences drive these currents, which are part of the global ocean conveyor belt system.",
+            groundwater: "Groundwater is water stored beneath the Earth's surface in soil pore spaces and rock formations. It's replenished by precipitation that seeps into the ground, a process called infiltration. Groundwater can resurface through springs or be extracted through wells. It plays a vital role in the water cycle by providing a slow, steady flow to surface water bodies and sustaining ecosystems during dry periods. The zone where all pore spaces are filled with water is called the saturated zone, and its upper surface is the water table.",
+            transpiration: "Transpiration is the process by which water moves through plants and evaporates from aerial parts, such as leaves, stems, and flowers. Plants absorb water from the soil, use some for photosynthesis and tissue building, and release the rest through tiny pores called stomata. Transpiration, combined with evaporation from soil and water surfaces, is referred to as evapotranspiration. This process is crucial for nutrient cycling in ecosystems and contributes significantly to the water cycle, especially in forested areas.",
+            runoff: "Runoff occurs when there is more water than can be absorbed by the ground or evaporated into the air. This excess water flows over the land surface and eventually into streams, rivers, and oceans. Runoff can come from precipitation, melting snow, or human activities like watering lawns. It plays a crucial role in shaping landscapes through erosion and deposition. The amount of runoff is influenced by factors such as soil type, vegetation cover, land use, and the intensity and duration of precipitation events.",
+            evaporation: "Evaporation is the process by which liquid water changes into water vapor. It occurs when water molecules at the surface gain enough energy to break free from the liquid state. The sun provides most of this energy, heating water in oceans, lakes, and other bodies of water. Evaporation is a crucial part of the water cycle, transferring water from the Earth's surface to the atmosphere. Factors affecting evaporation include temperature, humidity, wind speed, and surface area of water exposed to air.",
+            rain: "Rain is a form of precipitation where water droplets fall from clouds to the Earth's surface. It occurs when water vapor in clouds condenses and becomes too heavy to remain suspended in the air. Raindrops form around tiny particles like dust or salt, growing larger as they fall. Rain is essential for replenishing freshwater sources, supporting plant growth, and maintaining ecosystems. The amount and distribution of rainfall greatly influence climate patterns and the availability of water resources in different regions."
+        };
+
         function showInfo(element) {
             const infoBox = document.getElementById('info-box');
-            let info = '';
-
-            switch(element) {
-                case 'sun':
-                    info = "The sun is the primary driver of the water cycle. It provides energy to heat water in oceans, lakes, and other water bodies, causing evaporation. Solar energy also powers photosynthesis in plants, which contributes to transpiration. The sun's energy creates temperature differences in the atmosphere, leading to wind and weather patterns that distribute water vapor globally.";
-                    break;
-                case 'cloud':
-                    info = "Clouds form when water vapor in the air condenses into tiny water droplets or ice crystals. This process is called condensation and occurs when warm air rises and cools. As the air cools, it can hold less water vapor, so the excess condenses around tiny particles in the air (such as dust or salt). Clouds play a crucial role in the water cycle by transporting water vapor through the atmosphere and eventually releasing it as precipitation.";
-                    break;
-                case 'rain':
-                    info = "Precipitation occurs when water droplets in clouds become too heavy and fall as rain, snow, sleet, or hail. This is a crucial part of the water cycle that returns water to the Earth's surface. The type of precipitation depends on atmospheric conditions like temperature and humidity. Rain is liquid water drops, snow is ice crystals, sleet is a mix of rain and snow, and hail is formed when water droplets are carried upward by strong updrafts in thunderstorms and freeze into ice pellets.";
-                    break;
-                case 'ocean':
-                    info = "Oceans cover about 71% of the Earth's surface and contain about 97% of the Earth's water. They play a crucial role in the water cycle as the primary source of evaporation. Oceans also influence climate patterns and weather by absorbing and releasing heat. The continuous movement of ocean currents helps distribute heat and moisture around the globe. Salinity and temperature differences drive these currents, which are part of the global ocean conveyor belt system.";
-                    break;
-                case 'evaporation':
-                    info = "Evaporation is the process by which water changes from a liquid to a gas. It occurs when water is heated by the sun, causing water molecules to gain enough energy to break free from the liquid's surface and enter the atmosphere as water vapor. Evaporation occurs from all water surfaces, but is most significant from oceans, seas, and lakes. The rate of evaporation depends on factors such as temperature, humidity, wind speed, and surface area of the water body.";
-                    break;
-                case 'groundwater':
-                    info = "Groundwater is water stored beneath the Earth's surface in soil pore spaces and rock formations. It's replenished by precipitation that seeps into the ground, a process called infiltration. Groundwater can resurface through springs or be extracted through wells. It plays a vital role in the water cycle by providing a slow, steady flow to surface water bodies and sustaining ecosystems during dry periods. The zone where all pore spaces are filled with water is called the saturated zone, and its upper surface is the water table.";
-                    break;
-                case 'transpiration':
-                    info = "Transpiration is the process by which water moves through plants and evaporates from aerial parts, such as leaves, stems, and flowers. Plants absorb water from the soil, use some for photosynthesis and tissue building, and release the rest through tiny pores called stomata. Transpiration, combined with evaporation from soil and water surfaces, is referred to as evapotranspiration. This process is crucial for nutrient cycling in ecosystems and contributes significantly to the water cycle, especially in forested areas.";
-                    break;
-                case 'runoff':
-                    info = "Runoff occurs when there is more water than can be absorbed by the ground or evaporated into the air. This excess water flows over the land surface and eventually into streams, rivers, and oceans. Runoff can come from precipitation, melting snow, or human activities like watering lawns. It plays a crucial role in shaping landscapes through erosion and deposition. The amount of runoff is influenced by factors such as soil type, vegetation cover, land use, and the intensity and duration of precipitation events.";
-                    break;
-            }
-
-            infoBox.innerHTML = info;
+            infoBox.innerHTML = infoData[element] || "Information not available.";
         }
+
+        function createParticles() {
+            const waterCycle = document.getElementById('water-cycle');
+            const particleTypes = [
+                { class: 'rain-particle', count: 50, style: (p) => { p.style.left = `${Math.random() * 100}%`; p.style.top = `${Math.random() * 30}%`; p.style.animationDuration = `${Math.random() * 1 + 1}s`; } },
+                { class: 'evaporation-particle', count: 30, style: (p) => { p.style.left = `${50 + Math.random() * 40}%`; p.style.bottom = `${Math.random() * 20}%`; p.style.animationDelay = `${Math.random() * 4}s`; } },
+                { class: 'transpiration-particle', count: 20, style: (p) => { p.style.left = `${10 + Math.random() * 20}%`; p.style.bottom = `${50 + Math.random() * 20}%`; p.style.animationDelay = `${Math.random() * 5}s`; } },
+                { class: 'runoff-particle', count: 15, style: (p) => { p.style.left = `${25 + Math.random() * 10}%`; p.style.bottom = `${50 + Math.random() * 5}%`; p.style.animationDelay = `${Math.random() * 4}s`; } }
+            ];
+
+            particleTypes.forEach(type => {
+                for (let i = 0; i < type.count; i++) {
+                    const particle = document.createElement('div');
+                    particle.classList.add(type.class);
+                    type.style(particle);
+                    waterCycle.appendChild(particle);
+                }
+            });
+        }
+
+        createParticles();
 
         const questions = [
             {
@@ -260,25 +463,41 @@
             let quizHtml = `<h2>Question ${currentQuestion + 1}</h2>
                             <p>${q.question}</p>`;
             
-            for (let i = 0; i < q.options.length; i++) {
-                quizHtml += `<button onclick="checkAnswer(${i})">${q.options[i]}</button>`;
-            }
+            q.options.forEach((option, index) => {
+                quizHtml += `
+                    <button class="quiz-option" onclick="checkAnswer(${index})">
+                        ${option}
+                        <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='green' d='M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z'/></svg>" alt="Correct" class="feedback" id="correct-${index}">
+                        <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='red' d='M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z'/></svg>" alt="Incorrect" class="feedback" id="incorrect-${index}">
+                    </button>`;
+            });
             
             quizContainer.innerHTML = quizHtml;
         }
 
         function checkAnswer(answer) {
+            const buttons = document.querySelectorAll('.quiz-option');
+            buttons.forEach((button, index) => {
+                button.disabled = true;
+                if (index === questions[currentQuestion].correct) {
+                    document.getElementById(`correct-${index}`).style.display = 'inline';
+                } else if (index === answer && index !== questions[currentQuestion].correct) {
+                    document.getElementById(`incorrect-${index}`).style.display = 'inline';
+                }
+            });
+
             if (answer === questions[currentQuestion].correct) {
                 score++;
             }
             
-            currentQuestion++;
-            
-            if (currentQuestion < questions.length) {
-                showQuestion();
-            } else {
-                showResults();
-            }
+            setTimeout(() => {
+                currentQuestion++;
+                if (currentQuestion < questions.length) {
+                    showQuestion();
+                } else {
+                    showResults();
+                }
+            }, 2000);
         }
 
         function showResults() {
